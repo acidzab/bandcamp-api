@@ -85,7 +85,7 @@ def search(search_string: str = ""):
     search_api = "https://bandcamp.com/api/fuzzysearch/2/app_autocomplete?q=" + quote(search_string) + "&param_with_locations=true"
     # response = requests.get(
     #     , headers=header)
-    response = curler.curl_api(search_api, header)
+    response = curler.curl_api(search_api, header, True)
     results = response['results']
 
     return_results = []

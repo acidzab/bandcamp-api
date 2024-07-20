@@ -19,15 +19,15 @@ from .track import Track
 
 def get_json(self, url, debugging: bool = False):
     try:
-        response = curler.curl_api(url, self.headers)
+        response = curler.curl_api(url, self.headers, False)
         # response = requests.get(url, headers=self.headers)
     except (Exception,) as e:
         return None
 
     try:
-        self.soup = BeautifulSoup(response.text, "lxml")
+        self.soup = BeautifulSoup(response, "lxml")
     except FeatureNotFound:
-        self.soup = BeautifulSoup(response.text, "html.parser")
+        self.soup = BeautifulSoup(response, "html.parser")
 
     logging.debug(" Generating BandcampJSON..")
     bandcamp_json = BandcampJSON(self.soup, debugging).generate()

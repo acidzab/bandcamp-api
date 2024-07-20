@@ -7,7 +7,7 @@ import pycurl
 from pycurl import Curl
 
 
-def curl_api(url, headers):
+def curl_api(url, headers, out_to_json):
     buffer = BytesIO()
     curler = Curl()
     curler.setopt(pycurl.URL, url)
@@ -20,4 +20,6 @@ def curl_api(url, headers):
     curler.perform()
     curler.close()
 
-    return json.loads(buffer.getvalue().decode('utf-8'))
+    if out_to_json:
+        return json.loads(buffer.getvalue().decode('utf-8'))
+    return buffer.getvalue().decode('utf-8')

@@ -1,5 +1,7 @@
 import requests
 
+from bandcamp_api import curler
+
 
 class Artist:
     def __init__(self, artist_id: int):
@@ -14,10 +16,15 @@ class Artist:
         self.album_ids = []
 
         # getting information from api
-        response = requests.get(
-            url="https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(artist_id),
-        )
-        result = response.json()
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
+
+        artist_api_url = "https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(artist_id)
+        result = curler.curl_api(artist_api_url, header, True)
+
+        # response = requests.get(
+        #     url="https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(artist_id),
+        # )
+        # result = response.json()
         self.artist_title = result['name']
         self.artist_id = result['id']
         self.artist_url = result['bandcamp_url']

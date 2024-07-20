@@ -2,6 +2,9 @@ from datetime import datetime
 import time
 import requests
 
+from bandcamp_api import curler
+
+
 class Label:
     def __init__(self, label_id: int | str):
         self.label_id: int = 0
@@ -26,11 +29,13 @@ class Label:
         self.artists: list = []
         header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
-        response = requests.get(
-            url="https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(label_id),
-            headers=header
-        )
-        result = response.json()
+        label_api_url = "https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(label_id)
+        result = curler.curl_api(label_api_url, header, True)
+        # response = requests.get(
+        #     url="https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(label_id),
+        #     headers=header
+        # )
+        # result = response.json()
 
         self.label_id = result['id']
         self.label_title = result['name']

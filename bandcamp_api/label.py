@@ -24,9 +24,11 @@ class Label:
         # }
         self.location: str = ""
         self.artists: list = []
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
         response = requests.get(
             url="https://bandcamp.com/api/mobile/25/band_details?band_id=" + str(label_id),
+            headers=header
         )
         result = response.json()
 

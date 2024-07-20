@@ -11,7 +11,7 @@ import time
 
 
 def get_json(url, debugging: bool = False):
-    header = {'User-Agent': f'bandcamp-api/0 (https://github.com/RustyRin/bandcamp-api)'}
+    header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
     try:
         response = requests.get(url, headers=header)
@@ -37,6 +37,7 @@ def get_json(url, debugging: bool = False):
 
 class Track:
     def __init__(self, artist_id: int, track_id: int, advanced: bool = False):
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
         # object info
         self.type = "track"
@@ -87,7 +88,7 @@ class Track:
 
         response = requests.get(
             url="https://bandcamp.com/api/mobile/25/tralbum_details?band_id=" + str(artist_id) +
-                "&tralbum_id=" + str(track_id) + "&tralbum_type=t"
+                "&tralbum_id=" + str(track_id) + "&tralbum_type=t", headers=header
         )
         result = response.json()
         self.track_id = result['id']
@@ -100,7 +101,7 @@ class Track:
         # getting lyrics, if there is any
         if self.has_lyrics is True:
             r = requests.get("https://bandcamp.com/api/mobile/25/tralbum_lyrics?tralbum_id=" + str(self.track_id) + \
-                             "&tralbum_type=t")
+                             "&tralbum_type=t", headers=header)
             rr = r.json()
             self.lyrics = rr['lyrics'][str(self.track_id)]
 

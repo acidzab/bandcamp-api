@@ -48,9 +48,11 @@ class Album:
         self.artist_url = ""
 
         self.type = "album"
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
+
         response = requests.get(
             url="https://bandcamp.com/api/mobile/25/tralbum_details?band_id=" + str(artist_id) +
-            "&tralbum_id=" + str(album_id) + "&tralbum_type=a"
+            "&tralbum_id=" + str(album_id) + "&tralbum_type=a", headers=header
         )
         result = response.json()
 
@@ -59,7 +61,7 @@ class Album:
             if "No such tralbum for band" in result['error_message']:
                 response = requests.get(
                     url="https://bandcamp.com/api/mobile/25/tralbum_details?band_id=" + str(artist_id) +
-                        "&tralbum_id=" + str(album_id) + "&tralbum_type=t"
+                        "&tralbum_id=" + str(album_id) + "&tralbum_type=t", headers=header
                 )
                 result = response.json()
                 self.type = "album-single"
@@ -271,13 +273,13 @@ def get_album(album_id: int = None):
 
     response = requests.get(
         url="https://bandcamp.com/api/mobile/25/tralbum_details",
-        headers={"tralbum_id": str(id)}
+        headers={"tralbum_id": str(id), 'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
     )
 
 
 def get_json(url, debugging: bool = False):
 
-    headers = {'User-Agent': f'bandcamp-api/0 (https://github.com/RustyRin/bandcamp-api)'}
+    headers = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
     try:
         response = requests.get(url, headers=headers)

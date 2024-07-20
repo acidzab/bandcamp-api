@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from bs4 import FeatureNotFound
 
+from . import curler
 from .bandcampjson import BandcampJSON
 from .album import Album
 from .artist import Artist
@@ -18,8 +19,9 @@ from .track import Track
 
 def get_json(self, url, debugging: bool = False):
     try:
-        response = requests.get(url, headers=self.headers)
-    except requests.exceptions.MissingSchema:
+        response = curler.curl_api(url, self.headers)
+        # response = requests.get(url, headers=self.headers)
+    except (Exception,) as e:
         return None
 
     try:
@@ -38,8 +40,10 @@ def get_json(self, url, debugging: bool = False):
 
 
 class Bandcamp:
+    headers = None
+
     def __init__(self):
-        self.headers = {'User-Agent': 'bandcamp-api/0 (https://github.com/RustyRin/bandcamp-api)'}
+        self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
         self.soup = None
         self.tracks = None
 

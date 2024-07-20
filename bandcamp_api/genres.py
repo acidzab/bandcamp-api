@@ -7,7 +7,7 @@ import json
 
 def get_json(url, debugging: bool = False):
 
-        headers = {'User-Agent': f'bandcamp-api/0 (https://github.com/RustyRin/bandcamp-api)'}
+        headers = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
         try:
             response = requests.get(url, headers=headers)

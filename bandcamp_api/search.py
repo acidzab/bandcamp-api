@@ -1,4 +1,8 @@
+from urllib.parse import quote
+
 import requests
+
+from bandcamp_api import curler
 
 
 class SearchResultsItemArtist:
@@ -77,11 +81,12 @@ def search(search_string: str = ""):
     # needs a way of removing characters
     # that will screw up an url
     # keep url safe characters
-
-    response = requests.get(
-        "https://bandcamp.com/api/fuzzysearch/2/app_autocomplete?q=" + search_string + "&param_with_locations=true")
-
-    results = response.json()['results']
+    header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
+    search_api = "https://bandcamp.com/api/fuzzysearch/2/app_autocomplete?q=" + quote(search_string) + "&param_with_locations=true"
+    # response = requests.get(
+    #     , headers=header)
+    response = curler.curl_api(search_api, header)
+    results = response['results']
 
     return_results = []
 

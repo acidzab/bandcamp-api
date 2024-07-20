@@ -10,7 +10,7 @@ import time
 
 def get_json(url, debugging: bool = False):
 
-    header = {'User-Agent': f'bandcamp-api/0 (https://github.com/RustyRin/bandcamp-api)'}
+    header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
 
     try:
         response = requests.get(url, headers=header)
@@ -56,7 +56,8 @@ def get_current_new_and_notable_id():
         id_string = ''
         for id in currently_guessing:
             id_string += str(id) + ','
-        r = requests.get('https://bandcamp.com/api/notabletralbum/2/get?id=' + id_string)
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
+        r = requests.get('https://bandcamp.com/api/notabletralbum/2/get?id=' + id_string, headers=header)
 
         # see what becomes valid and invalid
         results = r.json()
@@ -68,7 +69,7 @@ def get_current_new_and_notable_id():
             for i in range(check_width - 1):
                 check_string += str(id + i) + ','
 
-            check = requests.get('https://bandcamp.com/api/notabletralbum/2/get?id=' + check_string)
+            check = requests.get('https://bandcamp.com/api/notabletralbum/2/get?id=' + check_string, headers=header)
             check = check.json()
             
             # if a single one returns then it is the new highest known
@@ -100,7 +101,8 @@ class NewAndNotable():
         for i in range(num_to_get):
             id_string += (str(current_id - i)) + ','
 
-        entries = requests.get('https://bandcamp.com/api/notabletralbum/2/get?id=' + id_string)
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
+        entries = requests.get('https://bandcamp.com/api/notabletralbum/2/get?id=' + id_string, headers=header)
         entries = entries.json()
 
         for key in entries:
@@ -198,7 +200,8 @@ class Charts:
 
         arg_string += '&p=' + str(page)
         
-        r = requests.get('https://bandcamp.com/api/discover/3/get_web?' + arg_string)
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
+        r = requests.get('https://bandcamp.com/api/discover/3/get_web?' + arg_string, headers=header)
         r = r.json()
 
         for current_album in r['items']:
@@ -263,12 +266,13 @@ class SaleFeed:
         self.sold_time = 0.00000
         #self.artist = ""
         self.purchases = []
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
         if time == 0:
             # looks like they didnt give a start time
             # assume they just want the whatever the latest is
-            r = requests.get('https://bandcamp.com/api/salesfeed/1/get')
+            r = requests.get('https://bandcamp.com/api/salesfeed/1/get', headers=header)
         else:
-            r = requests.get('https://bandcamp.com/api/salesfeed/1/get?start_date=' + str(time))
+            r = requests.get('https://bandcamp.com/api/salesfeed/1/get?start_date=' + str(time), headers=header)
 
         r = r.json()
         for sale in r['events']:
@@ -357,12 +361,13 @@ class BandcampWeekly():
         self.tracks = []
 
     def get_show(self, id: int):
+        header = {'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0'}
         if id == 0:
-            r = requests.get('https://bandcamp.com/api/bcweekly/3/list')
+            r = requests.get('https://bandcamp.com/api/bcweekly/3/list', headers=header)
             r = r.json()
             id = r['results'][0]['id']
         
-        r = requests.get("https://bandcamp.com/api/bcweekly/2/get?id=" + str(id))
+        r = requests.get("https://bandcamp.com/api/bcweekly/2/get?id=" + str(id), headers=header)
         r = r.json()
 
         self.date_released = datetime.strptime(r['date'], '%d %b %Y %H:%M:%S %Z')

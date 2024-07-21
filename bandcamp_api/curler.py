@@ -1,7 +1,5 @@
 import json
-import urllib
 from io import BytesIO
-from urllib.parse import quote
 
 import pycurl
 from pycurl import Curl

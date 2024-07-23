@@ -10,6 +10,7 @@ def curl_api(url, headers, out_to_json):
     curler = Curl()
     curler.setopt(pycurl.URL, url)
     curler.setopt(pycurl.WRITEDATA, buffer)
+    curler.setopt(pycurl.FOLLOWLOCATION, True)
     if headers:
         headers_list = []
         for header in headers.keys():

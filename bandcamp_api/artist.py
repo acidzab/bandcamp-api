@@ -9,7 +9,7 @@ class Artist:
         self.artist_id = 0
         self.artist_url = ""
         self.bio = ""
-        self.profile_picture_url = ""
+        self.profile_picture_url = None
         self.location = ""
         self.concerts = []
         self.links = []
@@ -29,7 +29,8 @@ class Artist:
         self.artist_id = result['id']
         self.artist_url = result['bandcamp_url']
         self.bio = result['bio']
-        self.profile_picture_url = "https://f4.bcbits.com/img/" + str(result["bio_image_id"]).zfill(10) + "_0.jpg"
+        if result.get('bio_image_id'):
+            self.profile_picture_url = "https://f4.bcbits.com/img/" + str(result["bio_image_id"]).zfill(10) + "_0.jpg"
         self.location = result['location']
 
         for show in result["shows"]:

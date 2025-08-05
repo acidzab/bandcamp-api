@@ -51,8 +51,9 @@ class Label:
 
         for album in result['discography']:
             date_released = album['release_date']
-            date_released = datetime.strptime(date_released, '%d %b %Y %H:%M:%S %Z')
-            date_released = int(time.mktime(date_released.timetuple()))
+            if date_released:
+                date_released = datetime.strptime(date_released, '%d %b %Y %H:%M:%S %Z')
+                date_released = int(time.mktime(date_released.timetuple()))
             self.albums.append(
                 {
                     "album_id": album['item_id'],

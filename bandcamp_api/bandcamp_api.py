@@ -82,7 +82,8 @@ class Bandcamp:
 
     def get_artist(self, artist_url) -> Artist | Label | None:
         """Returns information for a given artist URL"""
-        results = search(search_string=artist_url.split(".")[0].split("//")[1])
+        query_search = artist_url.split(".")[0].split("//")[1] if 'bandcamp.com' in artist_url else artist_url.split("//")[1]
+        results = search(search_string=query_search)
 
         if 'bandcamp.com/album/' in artist_url:
             artist_url = artist_url.split('/album')[0]

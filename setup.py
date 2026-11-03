@@ -2,7 +2,7 @@ from setuptools import *
 
 setup(
     name="bandcamp_api",
-    version="0.2.4",
+    version="0.2.5",
     description="Obtains information from bandcamp.com. Forked from RustyRin project",
     author="AcidZab",
     packages=['bandcamp_api'],

@@ -58,9 +58,9 @@ class Bandcamp:
         if album_id is not None and artist_id is not None:
             return Album(album_id=album_id, artist_id=artist_id, advanced=advanced)
         else:
-            if '/album/' in album_url:
+            if 'bandcamp.com/album/' in album_url:
                 search_term = album_url.split('/album/')[1]
-            elif '/track/' in album_url:
+            elif 'bandcamp.com/track/' in album_url:
                 search_term = album_url.split('/track/')[1]
 
             results = search(search_string=search_term.rstrip("//"))
@@ -84,11 +84,11 @@ class Bandcamp:
         """Returns information for a given artist URL"""
         results = search(search_string=artist_url.split(".")[0].split("//")[1])
 
-        if '/album/' in artist_url:
+        if 'bandcamp.com/album/' in artist_url:
             artist_url = artist_url.split('/album')[0]
-        elif '/track/' in artist_url:
+        elif 'bandcamp.com/track/' in artist_url:
             artist_url = artist_url.split('/track')[0]
-        elif '/music' in artist_url:
+        elif 'bandcamp.com/music' in artist_url:
             artist_url = artist_url.split('/music')[0]
 
         for item in results:
@@ -105,9 +105,9 @@ class Bandcamp:
         """Returns information for a given label URL"""
         results = search(search_string=label_url.split(".")[0].split("//")[1])
 
-        if '/album/' in label_url:
+        if 'bandcamp.com/album/' in label_url:
             label_url = label_url.split('/album')[0]
-        elif '/track/' in label_url:
+        elif 'bandcamp.com/track/' in label_url:
             label_url = label_url.split('/track')[0]
 
         for item in results:
